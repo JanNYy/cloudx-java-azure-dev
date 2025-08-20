@@ -12,7 +12,8 @@ Now, for the final task, your goal is to bring all these individual pieces toget
 **Please complete the following task:**
 
 1. PetStore public API services should be available for auto-scaling.
-2. PetStore Web App should support deployment slots.
+2. *If using Azure App Services*: PetStore Web App should support deployment slots. *If using Azure Container Apps*:
+   PetStore Web App should support multi-revision deployments.
 3. Pet and Product Services should use Azure SQL as a database.
 4. Order Service should use Cosmos DB as a database.
 5. Order Items Reserver function should be able to create Reservation JSON files in Azure Blob Storage by communicating through Service Bus and handle errors by sending the email through Logic Apps.
@@ -21,7 +22,8 @@ Now, for the final task, your goal is to bring all these individual pieces toget
 **Definition of Done:**
 
 1. The PetStore Public API services are configured for auto-scaling.
-2. Deployment slots are set up for the PetStore Web App.
+2. *If using Azure App Services*: Deployment slots are set up for the PetStore Web App. *If using Azure Container Apps*:
+   Multi-revision deployments are configured for the PetStore Web App with traffic distribution.
 3. The Pet and Product Services have successfully migrated to Azure Database for PostgreSQL.
 4. The Order Service has been updated to use Cosmos DB as its database.
 5. The Order Items Reserver Azure Function is able to create Reservation JSON files in Azure Blob Storage by communicating through the Service Bus.
@@ -35,7 +37,8 @@ Now, for the final task, your goal is to bring all these individual pieces toget
 **Consider providing the following screenshots as evidence of your task execution:**
 
 - Screenshots showing the auto-scaling settings for PetStore Public API Services in the Azure portal.
-- Screenshots depicting the deployment slots set up for the PetStore Web App.
+- *If using Azure App Services*: Screenshots depicting the deployment slots set up for the PetStore Web App. *If using
+  Azure Container Apps*: Screenshots showing multi-revision deployments and traffic distribution settings.
 - Screenshots highlighting the connection between Azure Database for PostgreSQL and the Pet and Product Services.
 - Screenshots illustrating CosmosDB's connection to the Order Service.
 - Screenshots revealing the Order object within CosmosDB.
