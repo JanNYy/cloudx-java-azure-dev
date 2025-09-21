@@ -9,9 +9,7 @@ services:
     environment:
       # Set to true if you have a connection string set in .env:
       - APPLICATIONINSIGHTS_ENABLED=false
-      # Enables B2C login/logout flow locally. Set additional configs in .env:
-      - PETSTOREAPP_B2C_ENABLED=false
-      # Enables Spring Security locally. Use together with B2C settings above:
+      # Enables External ID login/logout flow locally. Set additional configs in .env:
       - PETSTORE_SECURITY_ENABLED=false
 
   petstorepetservice:

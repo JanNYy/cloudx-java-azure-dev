@@ -2,6 +2,7 @@ package com.chtrembl.petstoreapp.controller;
 
 import com.chtrembl.petstoreapp.model.ContainerEnvironment;
 import com.chtrembl.petstoreapp.model.User;
+import com.chtrembl.petstoreapp.util.ExternalIdUtils;
 import com.microsoft.applicationinsights.telemetry.PageViewTelemetry;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -9,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCache;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,7 +19,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collection;
 
 import static com.chtrembl.petstoreapp.config.Constants.AUTH_TYPE;
 import static com.chtrembl.petstoreapp.config.Constants.CONTAINER_HOST;
@@ -57,12 +57,11 @@ public abstract class BaseController {
 
     /**
      * Common model setup for all controllers.
-     * Sets up session, authentication, and container information.
      */
     @ModelAttribute
-    public void setModel(HttpServletRequest request, Model model, OAuth2AuthenticationToken token) {
-        setupSessionUser(request, model, token); // Pass token to session setup
-        setupAuthenticationDetails(model, token);
+    public void setModel(HttpServletRequest request, Model model, @AuthenticationPrincipal OidcUser principal) {
+        setupSessionUser(request, model, principal);
+        setupAuthenticationDetails(model, principal);
         setupContainerInfo(model);
         setupCacheInfo(model);
     }
@@ -70,7 +69,7 @@ public abstract class BaseController {
     /**
      * Setup session user information.
      */
-    private void setupSessionUser(HttpServletRequest request, Model model, OAuth2AuthenticationToken token) {
+    private void setupSessionUser(HttpServletRequest request, Model model, OidcUser principal) {
         CaffeineCache caffeineCache = (CaffeineCache) this.currentUsersCacheManager
                 .getCache(CURRENT_USERS_HUB);
 
@@ -80,12 +79,18 @@ public abstract class BaseController {
             caffeineCache.put(sessionUser.getSessionId(), sessionUser.getName());
         }
 
-        if (token != null) {
-            final OAuth2User user = token.getPrincipal();
-            String authenticatedUserName = (String) user.getAttributes().get("name");
-            if (authenticatedUserName != null && !authenticatedUserName.equals(sessionUser.getName())) {
-                sessionUser.setName(authenticatedUserName);
-                log.debug("Updated session user name to: {}", authenticatedUserName);
+        if (principal != null) {
+            String displayName = ExternalIdUtils.getDisplayName(principal);
+            String email = ExternalIdUtils.getEmail(principal);
+
+            if (displayName != null && !displayName.equals(sessionUser.getName())) {
+                sessionUser.setName(displayName);
+                log.debug("Updated session user name to: {}", displayName);
+            }
+
+            if (email != null && !email.equals(sessionUser.getEmail())) {
+                sessionUser.setEmail(email);
+                log.debug("Updated session user email to: {}", email);
             }
         }
 
@@ -103,29 +108,28 @@ public abstract class BaseController {
     /**
      * Setup authentication details and user information.
      */
-    private void setupAuthenticationDetails(Model model, OAuth2AuthenticationToken token) {
-        if (token != null) {
-            final OAuth2User user = token.getPrincipal();
+    private void setupAuthenticationDetails(Model model, OidcUser principal) {
+        if (principal != null) {
+            String displayName = ExternalIdUtils.getDisplayName(principal);
+            String email = ExternalIdUtils.getEmail(principal);
+            String userId = ExternalIdUtils.getUserId(principal);
 
-            String authenticatedUserName = (String) user.getAttributes().get("name");
-            if (authenticatedUserName != null) {
-                sessionUser.setName(authenticatedUserName);
-                MDC.put(USER_NAME, authenticatedUserName);
-                model.addAttribute(MODEL_USER_NAME, authenticatedUserName);
+            if (displayName != null) {
+                sessionUser.setName(displayName);
+                MDC.put(USER_NAME, displayName);
+                model.addAttribute(MODEL_USER_NAME, displayName);
             }
 
-            String userEmail = extractUserEmail(user);
-            if (userEmail != null) {
-                sessionUser.setEmail(userEmail);
-                MDC.put(USER_EMAIL, userEmail);
-                model.addAttribute(MODEL_EMAIL, userEmail);
-                model.addAttribute(MODEL_USER_LOGGED_IN, true);
-                log.debug("User email set to: {}", userEmail);
+            if (email != null) {
+                sessionUser.setEmail(email);
+                MDC.put(USER_EMAIL, email);
+                model.addAttribute(MODEL_EMAIL, email);
+                log.debug("User email set to: {}", email);
             } else {
                 log.warn("Could not extract email for user: {}", sessionUser.getName());
             }
 
-            MDC.put(AUTH_TYPE, "OAuth2");
+            MDC.put(AUTH_TYPE, "OAuth2-ExternalID");
             MDC.put(IS_AUTHENTICATED, "true");
 
             if (!sessionUser.isInitialTelemetryRecorded()) {
@@ -138,9 +142,10 @@ public abstract class BaseController {
                 sessionUser.setInitialTelemetryRecorded(true);
             }
 
-            model.addAttribute(MODEL_CLAIMS, user.getAttributes());
+            model.addAttribute(MODEL_CLAIMS, principal.getClaims());
             model.addAttribute(MODEL_USER, sessionUser.getName());
-            model.addAttribute(MODEL_GRANT_TYPE, user.getAuthorities());
+            model.addAttribute(MODEL_USER_LOGGED_IN, true);
+            model.addAttribute(MODEL_GRANT_TYPE, principal.getAuthorities());
         } else {
             MDC.put(AUTH_TYPE, "Anonymous");
             MDC.put(IS_AUTHENTICATED, "false");
@@ -183,29 +188,7 @@ public abstract class BaseController {
     }
 
     /**
-     * Extract user email from OAuth2User attributes.
-     */
-    protected String extractUserEmail(OAuth2User user) {
-        try {
-            Object emailsAttribute = user.getAttribute("emails");
-            if (emailsAttribute instanceof Collection) {
-                @SuppressWarnings("unchecked")
-                Collection<String> emails = (Collection<String>) emailsAttribute;
-                if (!emails.isEmpty()) {
-                    String email = emails.iterator().next();
-                    log.debug("Found email from 'emails' collection: {}", email);
-                    return email.trim();
-                }
-            }
-            log.warn("No email or subject ID found in OAuth2 attributes");
-        } catch (Exception e) {
-            log.warn("Error extracting email from OAuth2User: {}", e.getMessage(), e);
-        }
-        return null;
-    }
-
-    /**
-     * Format stack trace for error display.
+     * Retrieve stack trace information for error handling.
      */
     protected String getStackTrace(Throwable throwable) {
         StringBuilder sb = new StringBuilder();
