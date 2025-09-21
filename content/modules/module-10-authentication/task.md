@@ -8,21 +8,21 @@ The source code is available [here](../../../petstore).
 
 **Please complete the following task:**
 
-1. Configure Microsoft Entra's Azure Active Directory B2C (Azure AD B2C) as an identity provider.
-2. Register the PetStore App as an Azure AD B2C application.
-3. Define and set up user flows (like sign-up and sign-in) for the PetStore App within Azure AD B2C.
-4. Configure the PetStore App to use Azure AD B2C.
-5. Ensure that users can successfully log in to the PetStore App using Azure AD B2C authentication.
+1. Configure Microsoft Entra External ID as an identity provider.
+2. Register the PetStore App as an External ID application.
+3. Configure the unified user flow (handles both sign-up and sign-in) for the PetStore App within External ID.
+4. Configure the PetStore App to use External ID authentication.
+5. Ensure that users can successfully log in to the PetStore App using External ID authentication.
 6. (Optional) Utilize Azure CLI to automate resource deployment.
 
 **Definition of Done:**
 
-1. Azure AD B2C identity provider has been configured.
-2. PetStore App has been registered as an application in Azure AD B2C.
-3. User flows have been configured for the PetStore App application.
-4. PetStore App configuration has been configured to use Azure AD B2C.
-5. Localhost has not been used as the sole redirect URI, reply URL, or logout success URL.
-6. Users can now log in to the PetStore App via Azure AD B2C authentication.
+1. Microsoft Entra External ID has been configured as an identity provider.
+2. PetStore App has been registered as an application in External ID.
+3. The unified user flow has been configured for the PetStore App application.
+4. PetStore App configuration has been updated to use External ID (OAuth2/OpenID Connect).
+5. Localhost has not been used as the sole redirect URI.
+6. Users can now log in to the PetStore App via External ID authentication.
 
 <img src="images/scheme.png" width="500" style="margin: 20px 0; display: inline-block;"/>
 
@@ -30,11 +30,13 @@ The source code is available [here](../../../petstore).
 
 **Consider providing the following screenshots as evidence of your task execution:**
 
-- Screenshots displaying the configured Azure AD B2C identity provider in the Azure portal.
-- Screenshots showing the registration of the PetStore App as an Azure AD B2C application, including App Registrations, Authentication (with Redirect URIs), Certificates & Secrets, and other pages.
-- Screenshots depicting the defined and set up user flows (such as sign-up and sign-in) for the PetStore App within Azure AD B2C.
-- Screenshots highlighting the PetStore App configuration to utilize Azure AD B2C.
-- Screenshots illustrating successful user logins to the PetStore App via Azure AD B2C authentication.
+- Screenshots displaying the configured Microsoft Entra External ID tenant in the Azure portal.
+- Screenshots showing the registration of the PetStore App as an External ID application, including App Registrations,
+  Authentication (with Redirect URIs), Certificates & Secrets, and other pages.
+- Screenshots depicting the configured unified user flow (handles both sign-up and sign-in) for the PetStore App within
+  External ID.
+- Screenshots highlighting the PetStore App configuration to utilize External ID with OAuth2/OpenID Connect.
+- Screenshots illustrating successful user logins to the PetStore App via External ID authentication.
 
 <hr>
 
