@@ -15,6 +15,10 @@ The source code is available [here](../../../petstore).
 5. Ensure that users can successfully log in to the PetStore App using External ID authentication.
 6. (Optional) Utilize Azure CLI to automate resource deployment.
 
+**Useful links:**
+
+- [Step-by-Step Guide](guides/step-by-step-guide/step-by-step-guide.md)
+
 **Definition of Done:**
 
 1. Microsoft Entra External ID has been configured as an identity provider.
