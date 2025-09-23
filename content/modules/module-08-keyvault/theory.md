@@ -15,18 +15,15 @@
 
 *Managed Identities*
 
--
-📄 [What are managed identities for Azure resources?](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview):
+- 📄 [What are managed identities for Azure resources?](https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/overview):
 Introduction to managed identities for Azure resources and how they simplify credential management.
 
 *Secrets Management*
 
--
-📄 [Manage secrets in your server apps with Azure Key Vault](https://learn.microsoft.com/en-us/learn/modules/manage-secrets-with-azure-key-vault/):
+- 📄 [Manage secrets in your server apps with Azure Key Vault](https://learn.microsoft.com/en-us/learn/modules/manage-secrets-with-azure-key-vault/):
 Learn to securely store and manage sensitive information such as keys, passwords, and certificates using Azure Key
 Vault (~46m).
--
-📄 [Quickstart: Set and retrieve a secret from Azure Key Vault using Azure CLI](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-cli):
+- 📄 [Quickstart: Set and retrieve a secret from Azure Key Vault using Azure CLI](https://learn.microsoft.com/en-us/azure/key-vault/secrets/quick-create-cli):
 Quickstart guide for managing Azure Key Vault secrets using the command-line interface.
 
 *Automation*

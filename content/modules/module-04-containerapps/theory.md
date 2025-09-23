@@ -14,7 +14,7 @@
 - 🎥 [Learn Azure Container Apps Now! Part 1: Features and Functionality](https://www.youtube.com/watch?v=hij830umcVQ): Focuses on the features and functionalities of Azure Container Apps (19m)
 
 *Deployment and Scaling*
--📄 [How to get started with Azure Container Apps](https://techcommunity.microsoft.com/t5/azure-developer-community-blog/azure-tips-and-tricks-how-to-get-started-with-azure-container/ba-p/3545026):
+- 📄 [How to get started with Azure Container Apps](https://techcommunity.microsoft.com/t5/azure-developer-community-blog/azure-tips-and-tricks-how-to-get-started-with-azure-container/ba-p/3545026):
 Microsoft Tech Community guide for getting started with Azure Container Apps
 - 🎥 [How to get started with Azure Container Apps](https://www.youtube.com/watch?v=QIg3NIgkARI): A great resource for getting started with Azure Container Apps (3 min)
 - 🎥 [Getting Started with Azure Container Apps: A Comprehensive Guide - Part 1](https://www.youtube.com/watch?v=YU7g1dw4hJE): An introductory guide to Azure Container Apps, ideal for beginners (21m)

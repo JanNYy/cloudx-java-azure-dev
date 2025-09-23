@@ -8,22 +8,17 @@
 
 *Service Bus, Event Hub, Event Grid*
 
--
-📄 [Introduction to Azure Service Bus](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview):
+- 📄 [Introduction to Azure Service Bus](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview):
 Learn how Service Bus enables message-based communication
--
-📄 [Azure Event Hubs: Data streaming platform with Kafka support](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about):
+- 📄 [Azure Event Hubs: Data streaming platform with Kafka support](https://learn.microsoft.com/en-us/azure/event-hubs/event-hubs-about):
 Understanding Event Hub for event-driven data streaming
 - 📄 [Introduction to Azure Event Grid](https://learn.microsoft.com/en-us/azure/event-grid/overview): Overview of how
   Event Grid helps in event-driven architectures
--
-📄 [Compare Azure messaging services - Event Grid, Event Hubs, and Service Bus](https://learn.microsoft.com/en-us/azure/event-grid/compare-messaging-services):
+- 📄 [Compare Azure messaging services - Event Grid, Event Hubs, and Service Bus](https://learn.microsoft.com/en-us/azure/event-grid/compare-messaging-services):
 Compare different messaging services in Azure
--
-📄 [Implement message-based communication workflows with Azure Service Bus](https://learn.microsoft.com/en-us/learn/modules/implement-message-workflows-with-service-bus/):
+- 📄 [Implement message-based communication workflows with Azure Service Bus](https://learn.microsoft.com/en-us/learn/modules/implement-message-workflows-with-service-bus/):
 Module for implementing complex messaging workflows using Azure Service Bus (~54m)
--
-📄 [Get started with Azure Service Bus queues (Java)](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-java-how-to-use-queues):
+- 📄 [Get started with Azure Service Bus queues (Java)](https://learn.microsoft.com/en-us/azure/service-bus-messaging/service-bus-java-how-to-use-queues):
 Guide to integrating Java applications with Service Bus
 - 🛠️ [Azure Service Bus bindings for Azure Functions](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-service-bus): Configure Azure Functions to trigger on Service Bus messages
 
